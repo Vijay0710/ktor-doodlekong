@@ -2,12 +2,12 @@ package com.eyeshield.utils
 
 import java.io.File
 
-val words = readWordList("resources/wordlist.txt")
+val words = readWordList("words_list.txt")
 
 fun readWordList(fileName: String): List<String> {
-    val inputStream = File(fileName).inputStream()
+    val inputStream = Thread.currentThread().contextClassLoader.getResourceAsStream(fileName) ?: throw IllegalArgumentException("Specify the file")
     val words = mutableListOf<String>()
-    inputStream.bufferedReader().forEachLine {
+    inputStream?.bufferedReader()?.forEachLine {
         words.add(it)
     }
     return words
